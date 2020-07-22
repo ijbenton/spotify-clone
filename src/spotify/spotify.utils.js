@@ -1,6 +1,7 @@
 import axios from 'axios';
 const clientId = 'c07316a87d2b484dba6cd298a9f73b00';
 // Testing: http://localhost:3000/
+
 // Deploy: https://spotify-clone-ijbenton.herokuapp.com/
 const redirectUri = 'https://spotify-clone-bentondev.netlify.app/';
 const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=playlist-modify-public%20playlist-modify-private%20user-follow-read%20user-follow-modify%20user-top-read%20user-library-read%20user-library-modify%20playlist-read-collaborative%20playlist-read-private%20user-read-recently-played&&state=123`;
