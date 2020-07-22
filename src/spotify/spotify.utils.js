@@ -51,7 +51,7 @@ export const getAccessToken = () => {
   }
   // Access Token is empty and not in the URL redirect users to the Authorization URL
   else {
-    window.location.href = accessUrl;
+    window.location = accessUrl;
   }
 
   return userAccessToken;
