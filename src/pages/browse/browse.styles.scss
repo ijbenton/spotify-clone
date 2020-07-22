@@ -1,0 +1,32 @@
+@import '../../scss/_config';
+
+.browse {
+  @include pageStyles();
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  color: white;
+
+  .browse-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 1rem;
+    background-color: rgb(37, 37, 37);
+    border-top: 1px solid rgb(194, 194, 194);
+    border-bottom: 1px solid rgb(194, 194, 194);
+    margin-bottom: 0.5rem;
+    a {
+      color: rgb(235, 235, 235);
+      text-decoration: none;
+      &:hover {
+        color: #fff;
+      }
+      @media only screen and (max-width: 480px) {
+        h4 {
+          font-size: 0.65rem;
+        }
+      }
+    }
+  }
+}

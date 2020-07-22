@@ -1,0 +1,98 @@
+@import '../../scss/variables';
+.track-list {
+  ::-webkit-scrollbar {
+    width: 0px !important; /* Remove scrollbar space */
+    background: transparent !important;
+
+    // lighten(
+    //   $background-color,
+    //   30%
+    // ); /* Optional: just make scrollbar invisible */
+  }
+  .track-list-container {
+    margin: 1rem 1.5rem;
+    overflow-y: scroll;
+
+    .track-list-details {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      h1 {
+        font-size: 3vw;
+        margin: 0;
+      }
+
+      .button {
+        width: 9rem;
+        height: 2rem;
+        border-radius: 25px;
+        background-color: $primary-color;
+        color: #fff;
+        transition: background-color 0.3s ease-in-out,
+          transform 0.3s ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin: 0 1rem;
+        &:hover {
+          background-color: $secondary-color;
+          transform: scale(1.05);
+        }
+      }
+    }
+    .track-sections {
+      display: grid;
+      grid-template-columns: 1fr 5fr 5fr 5fr 1fr 1.5fr;
+      border-bottom: 1px solid $primary-color;
+      h4 {
+        color: $text-secondary-color;
+        margin: 0;
+      }
+    }
+    .album-track-sections {
+      display: grid;
+      grid-template-columns: 1fr 6fr 6fr 1fr 1.5fr;
+      border-bottom: 1px solid $primary-color;
+      h4 {
+        color: $text-secondary-color;
+        margin: 0;
+      }
+    }
+  }
+  @media only screen and (max-width: 1024px) {
+    .track-list-container {
+      margin: 1rem 3rem;
+      .track-list-details {
+        h1 {
+          font-size: 4vw;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 700px) {
+    .track-list-container {
+      margin: 1rem;
+      .album-section,
+      .length-section {
+        display: none;
+      }
+
+      .track-list-details {
+        h1 {
+          font-size: 5.75vw;
+        }
+        .button {
+          width: 7.2rem;
+          height: 1.75rem;
+        }
+      }
+
+      .track-sections,
+      .album-track-sections {
+        grid-template-columns: 2fr 7fr 5fr 2fr;
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+@import '../../scss/_config';
+
+.recently-played-page {
+  @include pageStyles();
+}

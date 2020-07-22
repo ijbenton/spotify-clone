@@ -1,0 +1,36 @@
+@import '../../scss/_config';
+#homepage {
+  display: flex;
+  flex-direction: column;
+  @include pageStyles();
+  #top-artists {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.25rem 0;
+  }
+  #recently-played {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.25rem 0;
+  }
+  #top-tracks {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.25rem 0;
+  }
+  #recommendations {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.25rem 0;
+  }
+  #featured-playlists {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.25rem 0;
+  }
+  #new-releases {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.25rem 0;
+  }
+}

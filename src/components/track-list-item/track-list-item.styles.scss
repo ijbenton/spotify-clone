@@ -1,0 +1,119 @@
+@import '../../scss/variables';
+.track {
+  border-bottom: 1px solid $text-secondary-color;
+  align-items: center;
+  font-size: 0.85rem;
+
+  &:hover {
+    background: $background-secondary-color;
+  }
+
+  .play-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    padding: 0.5rem;
+    transition: all 0.15s;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .like-icon {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    padding: 0 0.5rem;
+    transition: all 0.15s;
+    height: 20px;
+    width: 20px;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .play-icon {
+    justify-self: center;
+  }
+
+  .track-artist,
+  .track-title,
+  .track-album,
+  .track-length {
+    font-weight: normal;
+  }
+
+  .track-artist {
+    a {
+      span {
+        padding-right: 0.25rem;
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .track-album {
+    a {
+      span {
+        padding-right: 0.25rem;
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  h4 {
+    padding-right: 0.25rem;
+  }
+  .play-icon {
+    //margin-right: 1rem;
+  }
+  @media only screen and (max-width: 700px) {
+    .options-icon {
+      display: none;
+    }
+    .play-icon,
+    .like-icon {
+      height: 22px;
+      width: 22px;
+    }
+    .like-icon {
+      padding: 0 0.5rem;
+      height: 17px;
+      width: 17px;
+    }
+    .track-artist {
+    }
+    .track-title {
+    }
+  }
+  @media only screen and (max-width: 1024px) {
+    width: 100%;
+  }
+}
+.album-track {
+  display: grid;
+  grid-template-columns: 1fr 6fr 6fr 1fr 1.5fr;
+}
+.list-track {
+  display: grid;
+  grid-template-columns: 1fr 5fr 5fr 5fr 1fr 1.5fr;
+}
+@media only screen and (max-width: 480px) {
+  .album-track,
+  .list-track {
+    display: grid;
+    grid-template-columns: 2fr 7fr 5fr 2fr;
+
+    .track-album,
+    .track-length {
+      display: none;
+    }
+  }
+}

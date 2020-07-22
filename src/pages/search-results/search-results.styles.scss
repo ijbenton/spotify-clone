@@ -1,0 +1,13 @@
+@import '../../scss/_config';
+
+.search-results {
+  @include pageStyles();
+  .search-bar {
+    display: none;
+  }
+  @media only screen and (max-width: 1024px) {
+    .search-bar {
+      display: block;
+    }
+  }
+}

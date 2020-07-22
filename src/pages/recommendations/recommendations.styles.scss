@@ -1,0 +1,5 @@
+@import '../../scss/_config';
+
+.recommendations-page {
+  @include pageStyles();
+}

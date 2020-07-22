@@ -1,0 +1,221 @@
+@import '../../scss/_config';
+@import '../../scss/variables';
+
+.playlist-page {
+  @include pageStyles();
+  #playlist {
+    #playlist-header {
+      display: flex;
+      margin: 1rem 1.5rem;
+      height: 225px;
+      img {
+        width: 225px;
+      }
+      .playlist-details {
+        width: 100%;
+
+        margin-left: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .playlist-details-header {
+          font-size: 0.85rem;
+          margin: 0;
+          letter-spacing: 0.2rem;
+        }
+        .playlist-title {
+          margin: 0;
+          font-size: 3rem;
+          font-weight: bold;
+        }
+        .playlist-long-title {
+          margin: 0;
+          font-size: 2.7vw;
+          font-weight: bold;
+          line-height: 3.5rem;
+        }
+        .description {
+          margin: 0;
+          font-size: 0.95rem;
+          color: $text-secondary-color;
+        }
+        .playlist-specs {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          .created-by {
+            width: 100%;
+            display: flex;
+            align-items: center;
+
+            p {
+              margin: 0 0.5rem 0 0;
+              font-weight: normal;
+              color: $text-secondary-color;
+              span {
+                color: $text-primary-color;
+                font-weight: bold;
+              }
+            }
+            svg {
+              height: 0.5rem;
+              width: 0.5rem;
+              margin-right: 0.5rem;
+              color: $text-secondary-color;
+            }
+          }
+        }
+        .playlist-controls {
+          width: 100%;
+          display: flex;
+          align-items: flex-end;
+          button {
+            width: 14rem;
+            height: 34px;
+            border-radius: 25px;
+            background-color: $primary-color;
+            color: $text-primary-color;
+            font-weight: bold;
+            transition: background-color 0.2s ease-in;
+            margin-right: 1rem;
+            &:hover {
+              background-color: $secondary-color;
+              transform: scale(1.05);
+            }
+          }
+          .playlist-like-icon {
+            border: 1px solid $text-primary-color;
+            border-radius: 50%;
+            padding: 0.5rem;
+            &:hover {
+              transform: scale(1.05);
+            }
+          }
+        }
+      }
+    }
+
+    .empty-playlist {
+      color: $text-primary-color;
+      align-items: center;
+      margin: 1.5rem;
+      font-size: 1.75rem;
+      h3 {
+        margin: 1rem 0;
+      }
+      h5 {
+        margin: 0.5rem 0;
+      }
+      a {
+        button {
+          width: 14rem;
+          height: 34px;
+          border-radius: 25px;
+          background-color: $primary-color;
+          color: $text-primary-color;
+          font-weight: bold;
+          transition: background-color 0.2s ease-in;
+          &:hover {
+            background-color: $secondary-color;
+            transform: scale(1.05);
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 1024px) {
+      #playlist-header {
+        margin: 1rem 3rem;
+      }
+      .empty-playlist {
+        margin: 1.5rem 3rem;
+      }
+    }
+    @media only screen and (max-width: 900px) {
+      #playlist-header {
+        .playlist-details {
+          .playlist-details-header {
+            font-size: 0.8rem;
+          }
+          .playlist-title {
+            font-size: 2.25rem;
+            line-height: 2.25rem;
+          }
+          .playlist-specs {
+            .created-by {
+              p {
+                font-size: 2vw;
+                margin-right: 0.75rem;
+              }
+              svg {
+                height: 0.5rem;
+                width: 0.5rem;
+                margin-right: 0.75rem;
+              }
+            }
+          }
+          .playlist-controls {
+            button {
+              width: 12rem;
+              height: 2.5rem;
+            }
+          }
+        }
+      }
+    }
+    @media only screen and (max-width: 700px) {
+      #playlist-header {
+        margin: 1rem;
+        height: 140px;
+        img {
+          width: 140px;
+        }
+
+        .playlist-details {
+          .description {
+            display: none;
+          }
+          .playlist-details-header {
+            font-size: 0.7rem;
+          }
+          .playlist-title {
+            font-size: 5vw;
+            line-height: 1.5rem;
+          }
+          .playlist-long-title {
+            font-size: 3.75vw;
+            line-height: 1.15rem;
+          }
+          .playlist-specs {
+            flex-direction: column;
+            align-items: flex-start;
+            .created-by {
+              p {
+                font-size: 0.7rem;
+                margin: 0;
+                span {
+                  margin-right: 0.5rem;
+                }
+              }
+
+              svg {
+                display: none;
+              }
+            }
+          }
+          .playlist-controls {
+            button {
+              align-self: flex-start;
+              width: 8rem;
+              height: 2rem;
+            }
+          }
+        }
+      }
+      .empty-playlist {
+        margin: 1rem;
+        font-size: 1.15rem;
+      }
+    }
+  }
+}

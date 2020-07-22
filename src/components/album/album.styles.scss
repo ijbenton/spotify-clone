@@ -1,0 +1,187 @@
+@import '../../scss/_config';
+
+.album-page {
+  @include pageStyles();
+  #album {
+    #album-header {
+      display: flex;
+      margin: 1rem 1.5rem;
+      height: 225px;
+      img {
+        width: 225px;
+      }
+      .album-details {
+        width: 100%;
+        margin-left: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .album-details-header {
+          font-size: 0.85rem;
+          margin: 0;
+          letter-spacing: 0.2rem;
+        }
+        .album-artist {
+          font-weight: normal;
+          color: $text-secondary-color;
+          a {
+            .highlight {
+              color: $text-primary-color;
+              &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        .album-title {
+          margin: 0;
+          font-size: 2.75rem;
+          font-weight: bold;
+        }
+
+        .album-long-title {
+          margin: 0;
+          font-size: 3vw;
+          font-weight: bold;
+          line-height: 3.5rem;
+        }
+
+        .album-specs {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          color: $text-secondary-color;
+          span {
+            margin-right: 0.75rem;
+          }
+          .circle-icon {
+            height: 0.5rem;
+            width: 0.5rem;
+            margin-right: 0.75rem;
+          }
+        }
+        .album-controls {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          button {
+            width: 14rem;
+            height: 34px;
+            border-radius: 25px;
+            background-color: $primary-color;
+            color: $text-primary-color;
+            font-weight: bold;
+            transition: background-color 0.2s ease-in;
+            margin-right: 1rem;
+            &:hover {
+              background-color: $secondary-color;
+              transform: scale(1.05);
+            }
+          }
+          .like-icon {
+            padding: 0.5rem;
+            transition: all 0.15s;
+            height: 1rem;
+            width: 1rem;
+            border: 2px solid $text-primary-color;
+            border-radius: 50%;
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 1024px) {
+      #album-header {
+        margin: 1rem 3rem;
+      }
+    }
+    @media only screen and (max-width: 900px) {
+      #album-header {
+        height: 25vw;
+        img {
+          width: 25vw;
+        }
+
+        .album-details {
+          .album-specs {
+            span {
+              font-size: 2vw;
+              margin-right: 0.75rem;
+            }
+          }
+          .album-controls {
+            .circle-icon {
+              height: 0.5rem;
+              width: 0.5rem;
+              margin-right: 0.75rem;
+            }
+            button {
+              width: 10rem;
+              height: 2.5rem;
+            }
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 700px) {
+      #album-header {
+        margin: 1rem;
+        height: 140px;
+        img {
+          width: 140px;
+        }
+
+        .album-details {
+          .album-details-header {
+            font-size: 2.75vw;
+            margin: 0;
+          }
+          .album-artist {
+            font-size: 3.25vw;
+          }
+          .album-title {
+            font-size: 5vw;
+            line-height: 1.75rem;
+          }
+          .album-long-title {
+            font-size: 3.5vw;
+            line-height: 1.25rem;
+          }
+          .album-specs {
+            span {
+              font-size: 3vw;
+            }
+          }
+          .album-controls {
+            button {
+              align-self: flex-start;
+              width: 8rem;
+              height: 1.75rem;
+            }
+            .like-icon {
+              padding: 0.35rem;
+              height: 13px;
+              width: 13px;
+            }
+          }
+        }
+      }
+    }
+    @media only screen and (max-width: 359px) {
+      #album-header {
+        .album-details {
+          .album-controls {
+            button {
+              width: 5.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

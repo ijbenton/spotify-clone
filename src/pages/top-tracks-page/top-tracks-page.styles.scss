@@ -1,0 +1,5 @@
+@import '../../scss/_config';
+
+.top-tracks-page {
+  @include pageStyles();
+}

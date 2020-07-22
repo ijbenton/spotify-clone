@@ -1,0 +1,210 @@
+@import '../../scss/_config';
+@import '../../scss/variables';
+.artist-page {
+  display: flex;
+  flex-direction: column;
+
+  #artist {
+    #artist-header {
+      display: flex;
+      margin: 1rem 1.5rem;
+      height: 200px;
+      img {
+        width: 200px;
+      }
+      .artist-details {
+        width: 100%;
+        margin-left: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .artist-details-header {
+          font-size: 0.85rem;
+          margin: 0;
+          letter-spacing: 0.2rem;
+        }
+        .button {
+          width: 12rem;
+          height: 2rem;
+          border-radius: 25px;
+          background-color: $primary-color;
+          transition: background-color 0.3s ease-in-out,
+            transform 0.3s ease-in-out;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          cursor: pointer;
+          font-size: 0.9rem;
+          &:hover {
+            background-color: $secondary-color;
+            transform: scale(1.05);
+          }
+        }
+        .artist-title {
+          margin: 0;
+          font-size: 3.5rem;
+          line-height: 3rem;
+          font-weight: bold;
+        }
+        .artist-long-title {
+          margin: 0;
+          font-size: 2.7vw;
+          font-weight: bold;
+          line-height: 3.5rem;
+        }
+        .followers {
+          margin: 0;
+          font-size: 0.95rem;
+          color: $text-secondary-color;
+        }
+      }
+      .related-container {
+        margin-right: 1.5rem;
+        h4 {
+          margin: 0;
+        }
+        .related-artists {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          a {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            img {
+              margin: 0;
+              width: 80px;
+              height: 80px;
+              border-radius: 50%;
+            }
+            p {
+              line-height: 0.8rem;
+              margin: 0.35rem;
+              font-size: 0.9vw;
+              width: 100px;
+            }
+          }
+          .more-button {
+            @include pageMoreButton();
+          }
+        }
+      }
+    }
+
+    .artist-albums-container {
+      h1 {
+        margin: 1rem 1.5rem 0 1.5rem;
+      }
+      .album-names {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        overflow-y: scroll;
+        justify-items: center;
+        align-items: center;
+        margin: 0 1.5rem 1rem 1.5rem;
+        .artist-album {
+          display: grid;
+          grid-template-rows: 1fr 2fr;
+          justify-items: center;
+          &:hover {
+            cursor: pointer;
+          }
+          p {
+            text-decoration: none;
+            line-height: 0.95rem;
+            margin: 0.35rem 0 0.15rem 0;
+            text-align: center;
+            font-size: 1vw;
+            width: 100px;
+          }
+          a img {
+            margin: 0;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+          }
+          a {
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+
+            .album-long-title {
+              font-size: 0.75vw;
+            }
+          }
+        }
+      }
+    }
+
+    @media only screen and (max-width: 1024px) {
+      #artist-header {
+        margin: 1rem 3rem;
+        .artist-details {
+          .artist-details-header {
+            font-size: 2vw;
+          }
+          .artist-title {
+            font-size: 5vw;
+          }
+          .artist-long-title {
+            font-size: 4vw;
+          }
+          .followers {
+            font-size: 2vw;
+          }
+        }
+      }
+    }
+    @media only screen and (max-width: 768px) {
+      #artist-header {
+        height: 170px;
+        img {
+          width: 170px;
+        }
+        .artist-details {
+          .artist-details-header {
+            font-size: 2.25vw;
+          }
+          .artist-title {
+            font-size: 6vw;
+          }
+          .artist-long-title {
+            font-size: 4vw;
+          }
+          .followers {
+            font-size: 2vw;
+          }
+        }
+      }
+    }
+    @media only screen and (max-width: 480px) {
+      #artist-header {
+        margin: 1rem;
+        height: 150px;
+        img {
+          width: 150px;
+        }
+        .artist-details {
+          .button {
+            width: 10rem;
+            height: 1.75rem;
+          }
+          .artist-details-header {
+            font-size: 3vw;
+          }
+          .artist-title {
+            font-size: 8vw;
+            line-height: 2rem;
+          }
+          .artist-long-title {
+            font-size: 5vw;
+            line-height: 1.75rem;
+          }
+          .followers {
+            font-size: 3.5vw;
+          }
+        }
+      }
+    }
+  }
+}

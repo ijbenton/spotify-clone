@@ -1,0 +1,114 @@
+@import '../../scss/variables';
+.top-header {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 200px;
+  height: 65px;
+  width: calc(100vw - 200px);
+  padding-left: 1rem;
+  background-color: #000;
+  z-index: 1;
+  align-items: center;
+
+  .sidebar-icon {
+    display: none;
+  }
+
+  .desktop-navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .user-icon {
+      color: $text-primary-color;
+      width: 100%;
+      display: flex;
+      margin-right: 4rem;
+      justify-content: flex-end;
+      align-items: center;
+      cursor: default;
+      svg {
+        margin-left: 0.75rem;
+      }
+    }
+  }
+
+  .mobile-navbar {
+    display: none;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    padding: 0;
+    height: 60px;
+    .sidebar-icon {
+      display: inline-block;
+    }
+
+    .desktop-navbar {
+      display: none;
+    }
+    .mobile-navbar {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      a, .sidebar-div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        span {
+          padding-top: 0.25rem;
+          font-size: 0.8rem;
+        }
+        svg {
+          padding-top: 0.35rem;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .mobile-navbar {
+      a, .sidebar-div {
+        span {
+          font-size: 0.6rem;
+        }
+      }
+    }
+  }
+}
+
+.mobile {
+  width: 100vw;
+  left: 0;
+
+  svg.fa-bars,
+  svg.fa-times,
+  svg.fa-home,
+  svg.fa-book,
+  svg.fa-search {
+    color: $text-primary-color;
+    height: 50px;
+    width: 50px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    svg.fa-bars,
+    svg.fa-times,
+    svg.fa-home,
+    svg.fa-book,
+    svg.fa-search {
+      height: 30px;
+      width: 30px;
+    }
+  }
+  @media only screen and (max-width: 320px) {
+    svg.fa-bars,
+    svg.fa-times,
+    svg.fa-home,
+    svg.fa-book,
+    svg.fa-search {
+      height: 25px;
+      width: 25px;
+    }
+  }
+}

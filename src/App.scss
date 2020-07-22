@@ -1,0 +1,44 @@
+@import 'scss/_variables';
+html {
+  height: 100%;
+  ::-webkit-scrollbar {
+    width: 7.5px; /* Remove scrollbar space */
+    background: black;
+
+    // lighten(
+    //   $background-color,
+    //   30%
+    // ); /* Optional: just make scrollbar invisible */
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: gray;
+  }
+  body {
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    background-color: $background-color;
+    color: $text-primary-color;
+    cursor: default;
+    a {
+      text-decoration: none;
+      color: $text-primary-color;
+    }
+  }
+  #root {
+    .app {
+      height: 100%;
+      outline: 0;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
+    button {
+      outline: 0;
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}
