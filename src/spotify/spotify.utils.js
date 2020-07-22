@@ -30,12 +30,11 @@ let userAccessToken,
 // Uses Implicit Grant Authorization Flow to obtain User Authorization
 export const getAccessToken = () => {
   // If userAccessToken is already set, return userAccessToken
-  userAccessToken = localStorage.getItem('userAccessToken');
   if (userAccessToken) {
     headers = {
-      Authorization: `Bearer ${userAccessToken}`
+      Authorization: `Bearer ${userAccessToken}`,
     };
-    return;
+    return userAccessToken;
   }
   // Retrieve access token and expiration time from URL
   const accessTokenUrl = window.location.href.match(/access_token=([^&]*)/);
@@ -44,9 +43,8 @@ export const getAccessToken = () => {
     userAccessToken = accessTokenUrl[1];
     userExpiresIn = expiresInUrl[1];
     headers = {
-      Authorization: `Bearer ${userAccessToken}`
+      Authorization: `Bearer ${userAccessToken}`,
     };
-    localStorage.setItem('userAccessToken', userAccessToken);
     // Wipes access token and URL parameters so App doesn't grab acess token after it expires
     window.setTimeout(() => (userAccessToken = ''), userExpiresIn * 1000);
     window.history.pushState('Access Token', null, '/');
@@ -55,9 +53,11 @@ export const getAccessToken = () => {
   else {
     window.location.href = accessUrl;
   }
+
+  return userAccessToken;
 };
 // Conver milliseconds to mm:ss format
-export const msToTime = duration => {
+export const msToTime = (duration) => {
   let seconds = Math.floor((duration / 1000) % 60);
   let minutes = Math.floor((duration / (1000 * 60)) % 60);
 
@@ -69,49 +69,49 @@ export const msToTime = duration => {
 
 // Checks an array of tracks and returns an array of booleans values on whether each track is saved
 // Spotify endpoint can only accept 50 items at a times
-export const checkSavedTracks = async trackIds => {
+export const checkSavedTracks = async (trackIds) => {
   let checks = [];
   while (trackIds.length > 50) {
     let splitTracks = trackIds.splice(0, 50);
     await axios
       .get(`https://api.spotify.com/v1/me/tracks/contains?ids=${splitTracks}`, {
-        headers
+        headers,
       })
-      .then(response => checks.push(...response.data));
+      .then((response) => checks.push(...response.data));
   }
   if (trackIds.length > 0) {
     await axios
       .get(`https://api.spotify.com/v1/me/tracks/contains?ids=${trackIds}`, {
-        headers
+        headers,
       })
-      .then(response => checks.push(...response.data));
+      .then((response) => checks.push(...response.data));
   }
   return checks;
 };
 
 // Checks an array of albums and returns an array of boolean values on whether each album is saved
 // Spotify endpoint can only accept 50 items at a times
-export const checkSavedAlbums = async albumIds => {
+export const checkSavedAlbums = async (albumIds) => {
   let checks = [];
   while (albumIds.length > 50) {
     let splitAlbums = albumIds.splice(0, 50);
     await axios
       .get(`https://api.spotify.com/v1/me/albums/contains?ids=${splitAlbums}`, {
-        headers
+        headers,
       })
-      .then(response => checks.push(...response.data));
+      .then((response) => checks.push(...response.data));
   }
   if (albumIds.length > 0) {
     await axios
       .get(`https://api.spotify.com/v1/me/albums/contains?ids=${albumIds}`, {
-        headers
+        headers,
       })
-      .then(response => checks.push(...response.data));
+      .then((response) => checks.push(...response.data));
   }
   return checks;
 };
 
-export const checkFollowedArtists = async artistIds => {
+export const checkFollowedArtists = async (artistIds) => {
   let checks = [];
   while (artistIds.length > 50) {
     let splitArtists = artistIds.splice(0, 50);
@@ -119,55 +119,57 @@ export const checkFollowedArtists = async artistIds => {
       .get(
         `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${splitArtists}`,
         {
-          headers
+          headers,
         }
       )
-      .then(response => checks.push(...response.data));
+      .then((response) => checks.push(...response.data));
   }
   if (artistIds.length > 0) {
     await axios
       .get(
         `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${artistIds}`,
         {
-          headers
+          headers,
         }
       )
-      .then(response => checks.push(...response.data));
+      .then((response) => checks.push(...response.data));
   }
   return checks;
 };
 
-export const checkIfPlaylistFollowed = async playlistId => {
+export const checkIfPlaylistFollowed = async (playlistId) => {
   let check = null;
   await axios
     .get(
       `https://api.spotify.com/v1/playlists/${playlistId}/followers/contains?ids=${userId}`,
       {
-        headers
+        headers,
       }
     )
-    .then(response => (check = response.data));
+    .then((response) => (check = response.data));
 
   return check;
 };
 
 // search() method accepts a search term input, passes the search term value to a Spotify request,
 // then returns the response as a list of tracks in JSON format
-export const searchSpotify = async term => {
+export const searchSpotify = async (term) => {
   // Start promise chain with a GET request to the Spotify endpoint, passing in the Authorization header
   let searchResults = null;
   await axios
     .get(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
-      headers
+      headers,
     })
-    .then(response => {
+    .then((response) => {
       // If no tracks return empty array
       if (response.data.tracks.items.length === 0) return [];
       // Map through each track and return an array of objects each containing track properties
       searchResults = response.data.tracks.items;
     })
     .then(async () => {
-      let checks = await checkSavedTracks(searchResults.map(track => track.id));
+      let checks = await checkSavedTracks(
+        searchResults.map((track) => track.id)
+      );
       searchResults.forEach((track, index) => (track.saved = checks[index]));
     });
   return searchResults;
@@ -177,10 +179,10 @@ export const getCurrentUser = async () => {
   if (userId) return userId;
   await axios
     .get('https://api.spotify.com/v1/me', {
-      headers
+      headers,
     })
     // Save the User's ID
-    .then(response => {
+    .then((response) => {
       userId = response.data.id;
     });
   return userId;
@@ -189,13 +191,13 @@ export const getCurrentUser = async () => {
 export const getUserLikedSongs = async () => {
   await axios
     .get('https://api.spotify.com/v1/me/tracks?limit=50', {
-      headers
+      headers,
     })
     .then(
-      response => (likedSongs = response.data.items.map(song => song.track))
+      (response) => (likedSongs = response.data.items.map((song) => song.track))
     )
     .then(async () => {
-      let checks = await checkSavedTracks(likedSongs.map(track => track.id));
+      let checks = await checkSavedTracks(likedSongs.map((track) => track.id));
       likedSongs.forEach((track, index) => (track.saved = checks[index]));
     });
 
@@ -205,19 +207,20 @@ export const getUserLikedSongs = async () => {
 export const getUserSavedAlbums = async () => {
   await axios
     .get('https://api.spotify.com/v1/me/albums', {
-      headers
+      headers,
     })
     .then(
-      response => (savedAlbums = response.data.items.map(album => album.album))
+      (response) =>
+        (savedAlbums = response.data.items.map((album) => album.album))
     )
     .then(async () => {
-      let checks = await checkSavedAlbums(savedAlbums.map(album => album.id));
+      let checks = await checkSavedAlbums(savedAlbums.map((album) => album.id));
       savedAlbums.forEach((album, index) => (album.saved = checks[index]));
     })
     .then(async () => {
-      savedAlbums.forEach(async album => {
+      savedAlbums.forEach(async (album) => {
         let checks = await checkSavedTracks(
-          album.tracks.items.map(track => track.id)
+          album.tracks.items.map((track) => track.id)
         );
         album.tracks.items.forEach(
           (track, index) => (track.saved = checks[index])
@@ -230,12 +233,12 @@ export const getUserSavedAlbums = async () => {
 export const getUserFollowedArtists = async () => {
   await axios
     .get('https://api.spotify.com/v1/me/following?type=artist', {
-      headers
+      headers,
     })
-    .then(response => (userArtists = response.data.artists.items))
+    .then((response) => (userArtists = response.data.artists.items))
     .then(async () => {
       let checks = await checkFollowedArtists(
-        userArtists.map(artist => artist.id)
+        userArtists.map((artist) => artist.id)
       );
       userArtists.forEach((artist, index) => (artist.followed = checks[index]));
     });
@@ -245,12 +248,12 @@ export const getUserFollowedArtists = async () => {
 export const getTopArtists = async () => {
   await axios
     .get('https://api.spotify.com/v1/me/top/artists', {
-      headers
+      headers,
     })
-    .then(response => (topArtists = response.data.items))
+    .then((response) => (topArtists = response.data.items))
     .then(async () => {
       let checks = await checkFollowedArtists(
-        topArtists.map(artist => artist.id)
+        topArtists.map((artist) => artist.id)
       );
       topArtists.forEach((artist, index) => (artist.followed = checks[index]));
     });
@@ -260,11 +263,11 @@ export const getTopArtists = async () => {
 export const getTopTracks = async () => {
   await axios
     .get('https://api.spotify.com/v1/me/top/tracks', {
-      headers
+      headers,
     })
-    .then(response => (topTracks = response.data.items))
+    .then((response) => (topTracks = response.data.items))
     .then(async () => {
-      let checks = await checkSavedTracks(topTracks.map(track => track.id));
+      let checks = await checkSavedTracks(topTracks.map((track) => track.id));
       topTracks.forEach((track, index) => (track.saved = checks[index]));
     });
   return topTracks;
@@ -273,18 +276,18 @@ export const getTopTracks = async () => {
 export const getUserPlaylists = async () => {
   await axios
     .get('https://api.spotify.com/v1/me', {
-      headers
+      headers,
     })
     // Save the User's ID
-    .then(response => {
+    .then((response) => {
       userId = response.data.id;
     })
     .then(async () => {
       await axios
         .get(`https://api.spotify.com/v1/users/${userId}/playlists?limit=50`, {
-          headers
+          headers,
         })
-        .then(response => {
+        .then((response) => {
           userPlaylists = response.data.items;
         });
     });
@@ -292,19 +295,19 @@ export const getUserPlaylists = async () => {
   return userPlaylists;
 };
 
-export const getAlbumById = async id => {
+export const getAlbumById = async (id) => {
   await axios
     .get(`https://api.spotify.com/v1/albums/${id}`, {
-      headers
+      headers,
     })
-    .then(response => (fetchedAlbum = response.data))
+    .then((response) => (fetchedAlbum = response.data))
     .then(async () => {
       let checks = await checkSavedAlbums(fetchedAlbum.id);
       fetchedAlbum.saved = checks[0];
     })
     .then(async () => {
       let checks = await checkSavedTracks(
-        fetchedAlbum.tracks.items.map(track => track.id)
+        fetchedAlbum.tracks.items.map((track) => track.id)
       );
       fetchedAlbum.tracks.items.forEach(
         (track, index) => (track.saved = checks[index])
@@ -313,15 +316,15 @@ export const getAlbumById = async id => {
   return fetchedAlbum;
 };
 
-export const getPlaylistTracks = async id => {
+export const getPlaylistTracks = async (id) => {
   await axios
     .get(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
-      headers
+      headers,
     })
-    .then(response => (playlistTracks = response.data.items))
+    .then((response) => (playlistTracks = response.data.items))
     .then(async () => {
       let checks = await checkSavedTracks(
-        playlistTracks.map(track => track.track.id)
+        playlistTracks.map((track) => track.track.id)
       );
       playlistTracks.forEach(
         (track, index) => (track.track.saved = checks[index])
@@ -330,52 +333,54 @@ export const getPlaylistTracks = async id => {
   return playlistTracks;
 };
 
-export const getArtistAlbums = async id => {
+export const getArtistAlbums = async (id) => {
   await axios
     .get(`https://api.spotify.com/v1/artists/${id}/albums?country=US`, {
-      headers
+      headers,
     })
     .then(
-      response =>
+      (response) =>
         (artistAlbums = response.data.items.filter(
           (album, index, self) =>
-            index === self.findIndex(t => t.name === album.name)
+            index === self.findIndex((t) => t.name === album.name)
         ))
     )
     .then(async () => {
-      let checks = await checkSavedAlbums(artistAlbums.map(album => album.id));
+      let checks = await checkSavedAlbums(
+        artistAlbums.map((album) => album.id)
+      );
       artistAlbums.forEach((album, index) => (album.saved = checks[index]));
     });
   return artistAlbums;
 };
 
-export const getArtistTopTracks = async id => {
+export const getArtistTopTracks = async (id) => {
   let artistTopTracks;
   await axios
     .get(`https://api.spotify.com/v1/artists/${id}/top-tracks?country=US`, {
-      headers
+      headers,
     })
-    .then(response => {
+    .then((response) => {
       artistTopTracks = response.data.tracks;
     })
     .then(async () => {
       let checks = await checkSavedTracks(
-        artistTopTracks.map(track => track.id)
+        artistTopTracks.map((track) => track.id)
       );
       artistTopTracks.forEach((track, index) => (track.saved = checks[index]));
     });
   return artistTopTracks;
 };
 
-export const getArtistRelated = async id => {
+export const getArtistRelated = async (id) => {
   await axios
     .get(`https://api.spotify.com/v1/artists/${id}/related-artists`, {
-      headers
+      headers,
     })
-    .then(response => (artistRelated = response.data.artists))
+    .then((response) => (artistRelated = response.data.artists))
     .then(async () => {
       let checks = await checkFollowedArtists(
-        artistRelated.map(artist => artist.id)
+        artistRelated.map((artist) => artist.id)
       );
       artistRelated.forEach(
         (artist, index) => (artist.followed = checks[index])
@@ -385,12 +390,12 @@ export const getArtistRelated = async id => {
   return artistRelated;
 };
 
-export const getArtistDetails = async id => {
+export const getArtistDetails = async (id) => {
   await axios
     .get(`https://api.spotify.com/v1/artists/${id}`, {
-      headers
+      headers,
     })
-    .then(response => (artistDetails = response.data))
+    .then((response) => (artistDetails = response.data))
     .then(async () => {
       let checks = await checkFollowedArtists(id);
 
@@ -403,11 +408,11 @@ export const getArtistDetails = async id => {
 export const getNewReleases = async () => {
   await axios
     .get('https://api.spotify.com/v1/browse/new-releases', {
-      headers
+      headers,
     })
-    .then(response => (newReleases = response.data.albums.items))
+    .then((response) => (newReleases = response.data.albums.items))
     .then(async () => {
-      let checks = await checkSavedAlbums(newReleases.map(album => album.id));
+      let checks = await checkSavedAlbums(newReleases.map((album) => album.id));
       newReleases.forEach((album, index) => (album.saved = checks[index]));
     });
 
@@ -417,28 +422,28 @@ export const getNewReleases = async () => {
 export const getFeaturedPlaylists = async () => {
   await axios
     .get('https://api.spotify.com/v1/browse/featured-playlists', {
-      headers
+      headers,
     })
-    .then(response => (featuredPlaylists = response.data.playlists.items));
+    .then((response) => (featuredPlaylists = response.data.playlists.items));
   return featuredPlaylists;
 };
 
 export const getBrowsingGenres = async () => {
   await axios
     .get('https://api.spotify.com/v1/browse/categories', {
-      headers
+      headers,
     })
-    .then(response => (genres = response.data.categories.items));
+    .then((response) => (genres = response.data.categories.items));
   return genres;
 };
 
-export const getGenrePlaylists = async genre => {
+export const getGenrePlaylists = async (genre) => {
   await axios
     .get(`https://api.spotify.com/v1/browse/categories/${genre}/playlists`, {
-      headers
+      headers,
     })
     .then(
-      response =>
+      (response) =>
         (genrePlaylists = { items: response.data.playlists.items, genre })
     );
   return genrePlaylists;
@@ -447,19 +452,19 @@ export const getGenrePlaylists = async genre => {
 export const getRecentlyPlayed = async () => {
   await axios
     .get('https://api.spotify.com/v1/me/player/recently-played', {
-      headers
+      headers,
     })
-    .then(response => {
+    .then((response) => {
       recentlyPlayed = response.data.items
-        .map(track => track.track)
+        .map((track) => track.track)
         .filter(
           (track, index, self) =>
-            index === self.findIndex(t => t.name === track.name)
+            index === self.findIndex((t) => t.name === track.name)
         );
     })
     .then(async () => {
       let checks = await checkSavedTracks(
-        recentlyPlayed.map(track => track.id)
+        recentlyPlayed.map((track) => track.id)
       );
       recentlyPlayed.forEach((track, index) => (track.saved = checks[index]));
     });
@@ -471,70 +476,70 @@ export const getRecommendations = async (tracks, artists) => {
     .get(
       `https://api.spotify.com/v1/recommendations?market=US&seed_artists=${artists}&seed_tracks=${tracks}`,
       {
-        headers
+        headers,
       }
     )
-    .then(response => {
+    .then((response) => {
       recommendations = response.data.tracks;
     })
     .then(async () => {
       let checks = await checkSavedTracks(
-        recommendations.map(track => track.id)
+        recommendations.map((track) => track.id)
       );
       recommendations.forEach((track, index) => (track.saved = checks[index]));
     });
   return recommendations;
 };
 
-export const likeTrack = trackId => {
+export const likeTrack = (trackId) => {
   axios(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`, {
     method: 'PUT',
-    headers
+    headers,
   });
 };
-export const unlikeTrack = trackId => {
+export const unlikeTrack = (trackId) => {
   axios(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`, {
     method: 'DELETE',
-    headers
+    headers,
   });
 };
 
-export const likeAlbum = albumId => {
+export const likeAlbum = (albumId) => {
   axios(`https://api.spotify.com/v1/me/albums?ids=${albumId}`, {
     method: 'PUT',
-    headers
+    headers,
   });
 };
 
-export const unlikeAlbum = albumId => {
+export const unlikeAlbum = (albumId) => {
   axios(`https://api.spotify.com/v1/me/albums?ids=${albumId}`, {
     method: 'DELETE',
-    headers
+    headers,
   });
 };
-export const followArtist = artistId => {
+export const followArtist = (artistId) => {
   axios(`https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`, {
     method: 'PUT',
-    headers
+    headers,
   });
 };
 
-export const unfollowArtist = artistId => {
+export const unfollowArtist = (artistId) => {
   axios(`https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`, {
     method: 'DELETE',
-    headers
+    headers,
   });
 };
-export const followPlaylist = playlistId => {
+export const followPlaylist = (playlistId) => {
   axios(`https://api.spotify.com/v1/playlists/${playlistId}/followers`, {
     method: 'PUT',
-    headers
+    headers,
   });
 };
 
-export const unfollowPlaylist = playlistId => {
+export const unfollowPlaylist = (playlistId) => {
   axios(`https://api.spotify.com/v1/playlists/${playlistId}/followers`, {
     method: 'DELETE',
-    headers
+    headers,
   });
 };
