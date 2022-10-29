@@ -1,14 +1,9 @@
-@import 'scss/_variables';
+@import "scss/_variables";
 html {
   height: 100%;
   ::-webkit-scrollbar {
-    width: 7.5px; /* Remove scrollbar space */
+    width: 7.5px;
     background: black;
-
-    // lighten(
-    //   $background-color,
-    //   30%
-    // ); /* Optional: just make scrollbar invisible */
   }
   ::-webkit-scrollbar-thumb {
     background-color: gray;
@@ -16,7 +11,10 @@ html {
   body {
     height: 100%;
     font-size: 16px;
-    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: "Poppins", sans-serif;
     background-color: $background-color;
     color: $text-primary-color;
     cursor: default;

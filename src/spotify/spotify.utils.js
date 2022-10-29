@@ -1,9 +1,9 @@
-import axios from 'axios';
-const clientId = 'c07316a87d2b484dba6cd298a9f73b00';
-// Testing: http://localhost:3000/
+import axios from "axios";
 
-// Deploy: https://spotify-clone-ijbenton.herokuapp.com/
-const redirectUri = 'https://spotify-clone-bentondev.netlify.app/';
+const clientId = "c07316a87d2b484dba6cd298a9f73b00";
+// Redirect URL Dev: http://localhost:3000/
+// Redirect URL Prod: https://spotify-clone-bentondev.netlify.app/
+const redirectUri = "https://spotify-clone-bentondev.netlify.app/";
 const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=playlist-modify-public%20playlist-modify-private%20user-follow-read%20user-follow-modify%20user-top-read%20user-library-read%20user-library-modify%20playlist-read-collaborative%20playlist-read-private%20user-read-recently-played&&state=123`;
 let userAccessToken,
   userExpiresIn,
@@ -46,8 +46,8 @@ export const getAccessToken = () => {
       Authorization: `Bearer ${userAccessToken}`,
     };
     // Wipes access token and URL parameters so App doesn't grab acess token after it expires
-    window.setTimeout(() => (userAccessToken = ''), userExpiresIn * 1000);
-    window.history.pushState('Access Token', null, '/');
+    window.setTimeout(() => (userAccessToken = ""), userExpiresIn * 1000);
+    window.history.pushState("Access Token", null, "/");
   }
   // Access Token is empty and not in the URL redirect users to the Authorization URL
   else {
@@ -61,10 +61,10 @@ export const msToTime = (duration) => {
   let seconds = Math.floor((duration / 1000) % 60);
   let minutes = Math.floor((duration / (1000 * 60)) % 60);
 
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  seconds = seconds < 10 ? '0' + seconds : seconds;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
 
-  return minutes + ':' + seconds;
+  return minutes + ":" + seconds;
 };
 
 // Checks an array of tracks and returns an array of booleans values on whether each track is saved
@@ -178,7 +178,7 @@ export const searchSpotify = async (term) => {
 export const getCurrentUser = async () => {
   if (userId) return userId;
   await axios
-    .get('https://api.spotify.com/v1/me', {
+    .get("https://api.spotify.com/v1/me", {
       headers,
     })
     // Save the User's ID
@@ -190,7 +190,7 @@ export const getCurrentUser = async () => {
 
 export const getUserLikedSongs = async () => {
   await axios
-    .get('https://api.spotify.com/v1/me/tracks?limit=50', {
+    .get("https://api.spotify.com/v1/me/tracks?limit=50", {
       headers,
     })
     .then(
@@ -206,7 +206,7 @@ export const getUserLikedSongs = async () => {
 
 export const getUserSavedAlbums = async () => {
   await axios
-    .get('https://api.spotify.com/v1/me/albums', {
+    .get("https://api.spotify.com/v1/me/albums", {
       headers,
     })
     .then(
@@ -232,7 +232,7 @@ export const getUserSavedAlbums = async () => {
 
 export const getUserFollowedArtists = async () => {
   await axios
-    .get('https://api.spotify.com/v1/me/following?type=artist', {
+    .get("https://api.spotify.com/v1/me/following?type=artist", {
       headers,
     })
     .then((response) => (userArtists = response.data.artists.items))
@@ -247,7 +247,7 @@ export const getUserFollowedArtists = async () => {
 
 export const getTopArtists = async () => {
   await axios
-    .get('https://api.spotify.com/v1/me/top/artists', {
+    .get("https://api.spotify.com/v1/me/top/artists", {
       headers,
     })
     .then((response) => (topArtists = response.data.items))
@@ -262,7 +262,7 @@ export const getTopArtists = async () => {
 
 export const getTopTracks = async () => {
   await axios
-    .get('https://api.spotify.com/v1/me/top/tracks', {
+    .get("https://api.spotify.com/v1/me/top/tracks", {
       headers,
     })
     .then((response) => (topTracks = response.data.items))
@@ -275,7 +275,7 @@ export const getTopTracks = async () => {
 
 export const getUserPlaylists = async () => {
   await axios
-    .get('https://api.spotify.com/v1/me', {
+    .get("https://api.spotify.com/v1/me", {
       headers,
     })
     // Save the User's ID
@@ -407,7 +407,7 @@ export const getArtistDetails = async (id) => {
 
 export const getNewReleases = async () => {
   await axios
-    .get('https://api.spotify.com/v1/browse/new-releases', {
+    .get("https://api.spotify.com/v1/browse/new-releases", {
       headers,
     })
     .then((response) => (newReleases = response.data.albums.items))
@@ -421,7 +421,7 @@ export const getNewReleases = async () => {
 
 export const getFeaturedPlaylists = async () => {
   await axios
-    .get('https://api.spotify.com/v1/browse/featured-playlists', {
+    .get("https://api.spotify.com/v1/browse/featured-playlists", {
       headers,
     })
     .then((response) => (featuredPlaylists = response.data.playlists.items));
@@ -430,7 +430,7 @@ export const getFeaturedPlaylists = async () => {
 
 export const getBrowsingGenres = async () => {
   await axios
-    .get('https://api.spotify.com/v1/browse/categories', {
+    .get("https://api.spotify.com/v1/browse/categories", {
       headers,
     })
     .then((response) => (genres = response.data.categories.items));
@@ -451,7 +451,7 @@ export const getGenrePlaylists = async (genre) => {
 
 export const getRecentlyPlayed = async () => {
   await axios
-    .get('https://api.spotify.com/v1/me/player/recently-played', {
+    .get("https://api.spotify.com/v1/me/player/recently-played", {
       headers,
     })
     .then((response) => {
@@ -493,53 +493,53 @@ export const getRecommendations = async (tracks, artists) => {
 
 export const likeTrack = (trackId) => {
   axios(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`, {
-    method: 'PUT',
+    method: "PUT",
     headers,
   });
 };
 export const unlikeTrack = (trackId) => {
   axios(`https://api.spotify.com/v1/me/tracks?ids=${trackId}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers,
   });
 };
 
 export const likeAlbum = (albumId) => {
   axios(`https://api.spotify.com/v1/me/albums?ids=${albumId}`, {
-    method: 'PUT',
+    method: "PUT",
     headers,
   });
 };
 
 export const unlikeAlbum = (albumId) => {
   axios(`https://api.spotify.com/v1/me/albums?ids=${albumId}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers,
   });
 };
 export const followArtist = (artistId) => {
   axios(`https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`, {
-    method: 'PUT',
+    method: "PUT",
     headers,
   });
 };
 
 export const unfollowArtist = (artistId) => {
   axios(`https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers,
   });
 };
 export const followPlaylist = (playlistId) => {
   axios(`https://api.spotify.com/v1/playlists/${playlistId}/followers`, {
-    method: 'PUT',
+    method: "PUT",
     headers,
   });
 };
 
 export const unfollowPlaylist = (playlistId) => {
   axios(`https://api.spotify.com/v1/playlists/${playlistId}/followers`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers,
   });
 };

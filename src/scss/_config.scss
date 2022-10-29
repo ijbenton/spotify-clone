@@ -1,4 +1,4 @@
-@import './_variables.scss';
+@import "./_variables.scss";
 @mixin rows {
   .items-container {
     display: grid;
@@ -31,7 +31,6 @@
         svg {
           margin: 0;
           z-index: 5;
-          // visibility: hidden;
           display: none;
           position: relative;
           bottom: 67%;
